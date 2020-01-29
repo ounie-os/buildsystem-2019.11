@@ -173,6 +173,8 @@ endif
 define SAMBA4_INSTALL_INIT_SYSV
 	$(INSTALL) -m 0755 -D package/samba4/S91smb \
 		$(TARGET_DIR)/etc/init.d/S91smb
+	$(INSTALL) -m 0755 -D package/samba4/smb.conf \
+		$(TARGET_DIR)/etc/samba/smb.conf
 endef
 
 ifeq ($(BR2_INIT_SYSTEMD),y)

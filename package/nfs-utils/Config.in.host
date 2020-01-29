@@ -1,0 +1,2 @@
+config BR2_PACKAGE_HOST_NFS-UTILS
+	bool "host nfs-utils"

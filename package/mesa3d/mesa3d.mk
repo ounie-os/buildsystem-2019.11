@@ -23,6 +23,8 @@ MESA3D_DEPENDENCIES = \
 	libdrm \
 	zlib
 
+MESA3D_CFLAGS = -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Os -I$(HOST_DIR)/usr/include
+
 MESA3D_CONF_OPTS = \
 	-Dgallium-omx=disabled \
 	-Dpower8=false \
