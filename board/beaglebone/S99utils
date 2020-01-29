@@ -1,0 +1,38 @@
+#! /bin/sh
+
+kernel_version=`uname -r`
+
+case "$1" in
+	start)
+		if [ "$kernel_version" == "3.18.20" ]
+		then
+			mount /dev/mmcblk0p3 /mnt
+			ifconfig eth0 192.168.1.200
+			#modprobe 8821au
+			#sleep 1
+			#ifconfig wlan0 192.168.3.100
+			#hostapd -B /etc/hostapd.conf
+			#echo 1 > /proc/sys/net/ipv4/ip_forward
+			#ifconfig eth0 up
+			#iptables -F
+			#iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -o eth0 -j MASQUERADE
+			#sleep 1
+			#mentohust &
+		else
+			mount /dev/mmcblk1p3 /mnt
+			#modprobe davinci_mdio
+			#modprobe ti_cpsw
+			#ifconfig eth0 192.168.1.100
+			udhcpc -b -i eth0
+		fi
+		;;
+	stop)
+		if [ "$kernel_version" == "3.18.20" ]
+		then
+			mentohust -k
+		fi
+		;;
+	*)
+		exit 1
+		;;
+esac
