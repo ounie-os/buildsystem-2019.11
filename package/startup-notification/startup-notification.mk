@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-STARTUP_NOTIFICATION_VERSION = 0.9
+STARTUP_NOTIFICATION_VERSION = 0.12
 STARTUP_NOTIFICATION_SITE = http://freedesktop.org/software/startup-notification/releases
 STARTUP_NOTIFICATION_INSTALL_STAGING = YES
 STARTUP_NOTIFICATION_DEPENDENCIES = xlib_libX11
