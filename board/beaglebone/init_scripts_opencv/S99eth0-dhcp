@@ -1,0 +1,14 @@
+#! /bin/sh
+
+case "$1" in
+	start)
+		modprobe davinci_mdio
+        modprobe ti_cpsw
+        udhcpc -b -i eth0
+        ;;
+	stop)
+		;;
+	*)
+		exit 1
+		;;
+esac

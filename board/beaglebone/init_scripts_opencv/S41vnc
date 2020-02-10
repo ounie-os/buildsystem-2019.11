@@ -1,0 +1,39 @@
+#! /bin/sh
+
+BIN=/usr/bin/x11vnc
+
+#X11VNC_ARGS="-forever -shared -rfbauth /$USER/.vnc/passwd -o /tmp/vnc.log"
+X11VNC_ARGS="-forever -shared -o /tmp/vnc.log"
+
+start() {
+	printf "Starting vnc server: "
+	start-stop-daemon -S -q -b --exec $BIN -- $X11VNC_ARGS
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Stopping vnc server: "
+	kill -9 `pidof x11vnc`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+	stop
+	sleep 2
+	start
+}
+
+case "$1" in
+	start)
+        start
+        ;;
+	stop)
+	    stop
+		;;
+	restart|reload)
+		restart
+	;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

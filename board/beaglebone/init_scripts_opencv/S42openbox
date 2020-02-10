@@ -1,0 +1,38 @@
+#! /bin/sh
+
+OPENBOX_BIN=/usr/bin/openbox
+OPENBOX_ARGS=
+export DISPLAY=:0.0
+
+start() {
+	printf "Starting openbox: "
+	start-stop-daemon -S -q -b --exec $OPENBOX_BIN -- $OPENBOX_ARGS
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Stopping openbox: "
+	kill -9 `pidof openbox`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+	stop
+	sleep 2
+	start
+}
+
+case "$1" in
+	start)
+        start
+        ;;
+	stop)
+	    stop
+		;;
+	restart|reload)
+		restart
+	;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

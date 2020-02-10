@@ -1,0 +1,12 @@
+#! /bin/sh
+
+case "$1" in
+	start)
+		mount /dev/mmcblk1p3 /mnt
+        ;;
+	stop)
+		;;
+	*)
+		exit 1
+		;;
+esac

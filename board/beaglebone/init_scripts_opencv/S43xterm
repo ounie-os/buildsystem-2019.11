@@ -1,0 +1,38 @@
+#! /bin/sh
+
+XTERM_BIN=/usr/bin/xterm
+XTERM_ARGS="-geometry 80x30+0+0 -name login"
+export DISPLAY=:0.0
+
+start() {
+	printf "Starting xterm: "
+	start-stop-daemon -S -q -b --exec $XTERM_BIN -- $XTERM_ARGS
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Stopping xterm: "
+	kill -9 `pidof xterm`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+	stop
+	sleep 2
+	start
+}
+
+case "$1" in
+	start)
+        start
+        ;;
+	stop)
+	    stop
+		;;
+	restart|reload)
+		restart
+	;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
