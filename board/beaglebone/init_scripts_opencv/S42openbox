@@ -1,6 +1,6 @@
 #! /bin/sh
 
-OPENBOX_BIN=/usr/bin/openbox
+OPENBOX_BIN=/usr/bin/openbox-session
 OPENBOX_ARGS=
 export DISPLAY=:0.0
 
