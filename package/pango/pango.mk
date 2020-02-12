@@ -29,7 +29,8 @@ HOST_PANGO_DEPENDENCIES = \
 	host-cairo \
 	host-harfbuzz \
 	host-fontconfig \
-	host-freetype
+	host-freetype \
+	host-libfribidi
 
 ifeq ($(BR2_PACKAGE_XORG7),y)
 PANGO_DEPENDENCIES += xlib_libX11
