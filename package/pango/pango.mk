@@ -22,7 +22,8 @@ PANGO_DEPENDENCIES = \
 	cairo \
 	harfbuzz \
 	fontconfig \
-	freetype
+	freetype \
+        libfribidi
 HOST_PANGO_DEPENDENCIES = \
 	host-pkgconf \
 	host-libglib2 \
