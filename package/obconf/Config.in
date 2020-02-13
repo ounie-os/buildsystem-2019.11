@@ -1,0 +1,5 @@
+config BR2_PACKAGE_OBCONF
+	bool "obconf"
+	depends on BR2_PACKAGE_LIBGTK2
+	depends on BR2_PACKAGE_LIBGLADE
+	depends on BR2_PACKAGE_OPENBOX
