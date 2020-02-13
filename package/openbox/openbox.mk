@@ -9,6 +9,7 @@ OPENBOX_SOURCE = openbox-$(OPENBOX_VERSION).tar.xz
 OPENBOX_SITE = http://openbox.org/dist/openbox
 OPENBOX_LICENSE = GPL-2.0+
 OPENBOX_LICENSE_FILES = COPYING
+OPENBOX_INSTALL_STAGING = YES
 
 OPENBOX_CONF_OPTS = \
 	--x-includes=$(STAGING_DIR)/usr/include/X11 \
