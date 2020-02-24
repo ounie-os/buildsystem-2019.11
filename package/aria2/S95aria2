@@ -1,0 +1,46 @@
+#! /bin/sh
+
+ARIA2_BIN=/usr/bin/aria2c
+ARIA2_ROOT_PATH=/etc/aria2
+ARIA2_CONF=$ARIA2_ROOT_PATH/aria2.conf
+ARIA2_SESSION_PATH=/mnt/aria2
+
+start() {
+	printf "Starting aria2: "
+	if [ ! -d $ARIA2_SESSION_PATH ]; then
+		echo "Creating aria2 session file..."
+		mkdir -p $ARIA2_SESSION_PATH
+		touch $ARIA2_SESSION_PATH/aria2.session
+		touch $ARIA2_SESSION_PATH/dht.dat
+	fi
+	
+	$ARIA2_BIN --input-file=$ARIA2_SESSION_PATH/aria2.session --conf-path=$ARIA2_ROOT_PATH/aria2.conf -D
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Stopping aria2: "
+	kill -9 `pidof aria2c`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+case "$1" in
+	start)
+        start
+        ;;
+	stop)
+	    stop
+		;;
+	restart|reload)
+		restart
+	;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
