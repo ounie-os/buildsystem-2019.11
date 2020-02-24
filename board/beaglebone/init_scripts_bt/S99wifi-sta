@@ -1,0 +1,17 @@
+#! /bin/sh
+
+INTERFACE=wlan0
+
+case "$1" in
+	start)
+		wpa_supplicant -B -Dnl80211 -i$INTERFACE -c/etc/wpa_supplicant.conf
+		udhcpc -b -q -i $INTERFACE
+		;;
+	stop)
+		kill -9 `pidof wpa_supplicant`
+        kill -9 `pidof udhcpc`
+        ;;
+	*)
+		exit 1
+		;;
+esac

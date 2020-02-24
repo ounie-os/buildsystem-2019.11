@@ -1,0 +1,17 @@
+#! /bin/sh
+
+case "$1" in
+	start)
+		modprobe 8821au
+		modprobe davinci_mdio
+        modprobe ti_cpsw
+		;;
+	stop)
+		rmmod 8821au
+		rmmod ti_cpsw
+		rmmod davinci_mdio
+		;;
+	*)
+		exit 1
+		;;
+esac
