@@ -7,9 +7,6 @@ case "$1" in
         modprobe ti_cpsw
 		;;
 	stop)
-		rmmod 8821au
-		rmmod ti_cpsw
-		rmmod davinci_mdio
 		;;
 	*)
 		exit 1
