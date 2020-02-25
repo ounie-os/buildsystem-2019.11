@@ -14,6 +14,7 @@ ARIA2_LICENSE_FILES = COPYING
 define ARIA2_INSTALL_CONFIG_FILE
 	mkdir -p $(TARGET_DIR)/etc/aria2/
 	$(INSTALL) -m 0755 -D package/aria2/aria2.conf $(TARGET_DIR)/etc/aria2/
+	[ -d $(TARGET_DIR)/etc/init.d/ ] || mkdir -p $(TARGET_DIR)/etc/init.d/
 	$(INSTALL) -m 0755 -D package/aria2/S95aria2 $(TARGET_DIR)/etc/init.d/
 endef
 
