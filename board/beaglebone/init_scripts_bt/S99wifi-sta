@@ -1,15 +1,57 @@
 #! /bin/sh
 
 INTERFACE=wlan0
+WLAN_MODULE_NAME=8821au
+
+wait_iface() {
+if [ "$1" -a ! -e "/sys/class/net/$2" ]; then
+    time_left=$1
+    printf "Waiting for interface %s to appear" "$2"
+    while [ $time_left -gt 0 ]; do
+        if [ -e "/sys/class/net/$2" ]; then
+            printf "\n"
+            return $?
+        fi
+        sleep 1
+        printf "."
+        : $((time_left -= 1))
+    done
+    printf " timeout!\n"
+fi
+}
+
+start()
+{
+    lsmod | grep $WLAN_MODULE_NAME
+	[ $? = 0 ] || modprobe $WLAN_MODULE_NAME && wait_iface 3 $INTERFACE
+    wpa_supplicant -B -Dnl80211 -i$INTERFACE -c/etc/wpa_supplicant.conf
+    udhcpc -b -R -i $INTERFACE
+}
+
+stop()
+{
+    ifconfig $INTERFACE down
+    kill -15 `pidof wpa_supplicant`
+    kill -15 `pidof udhcpc`
+	rmmod $WLAN_MODULE_NAME
+}
+
+restart()
+{
+    stop
+    sleep 2
+    start
+}
 
 case "$1" in
 	start)
-		wpa_supplicant -B -Dnl80211 -i$INTERFACE -c/etc/wpa_supplicant.conf
-		udhcpc -b -i $INTERFACE
+		start
 		;;
 	stop)
-		kill -9 `pidof wpa_supplicant`
-        kill -9 `pidof udhcpc`
+		stop
+        ;;
+    restart)
+        	restart
         ;;
 	*)
 		exit 1
