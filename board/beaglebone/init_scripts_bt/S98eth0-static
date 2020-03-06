@@ -1,6 +1,6 @@
 #! /bin/sh
 
-INTERFACE="eth0 wlan0 wlan1"
+INTERFACE="eth0"
 TIME_OUT=3
 
 wait_iface() {
@@ -23,14 +23,14 @@ fi
 
 case "$1" in
 	start)
-		modprobe 8821au
 		modprobe davinci_mdio
         modprobe ti_cpsw
 		for i in $INTERFACE;
         do
             wait_iface $TIME_OUT $i;
         done
-		;;
+		ifconfig eth0 192.168.1.250	
+        ;;
 	stop)
 		;;
 	*)
