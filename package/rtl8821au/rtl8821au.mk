@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RTL8821AU_VERSION = e1cf2bb31fe9ef55146f76670d1230dd43f10702
+RTL8821AU_VERSION = 125ab94907b9a4ccb2553d296d3fe2a06d41a6c7
 RTL8821AU_SITE = $(call github,ounie-os,rtl8821au,$(RTL8821AU_VERSION))
 RTL8821AU_LICENSE = GPL-2.0
 RTL8821AU_LICENSE_FILES = LICENSE
