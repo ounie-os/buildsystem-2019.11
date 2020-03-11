@@ -3,12 +3,9 @@
 CROND=/usr/sbin/crond
 CRONTAB=/usr/bin/crontab
 MEM_DIR=/tmp
-WLAN_MODULE_NAME=8821au
 
 case "$1" in
 	start)
-		lsmod | grep $WLAN_MODULE_NAME
-		[ $? = 0 ] || exit 1
 		ln -sf /etc/cron.d/cron-check-wifi $MEM_DIR/cron-check-wifi
         ln -sf /etc/cron.d/check_wifi_status.sh $MEM_DIR/check_wifi_status.sh
 		$CRONTAB -c $MEM_DIR $MEM_DIR/cron-check-wifi

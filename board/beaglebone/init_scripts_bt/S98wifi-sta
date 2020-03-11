@@ -25,7 +25,7 @@ start()
     lsmod | grep $WLAN_MODULE_NAME
 	[ $? = 0 ] || modprobe $WLAN_MODULE_NAME && wait_iface 3 $INTERFACE
     wpa_supplicant -B -Dnl80211 -i$INTERFACE -c/etc/wpa_supplicant.conf
-    udhcpc -b -R -i $INTERFACE
+    udhcpc -b -R -S -i $INTERFACE
 }
 
 stop()
