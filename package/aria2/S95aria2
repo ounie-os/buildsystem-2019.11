@@ -14,7 +14,7 @@ start() {
 		touch $ARIA2_SESSION_PATH/dht.dat
 	fi
 	
-	$ARIA2_BIN --input-file=$ARIA2_SESSION_PATH/aria2.session --conf-path=$ARIA2_ROOT_PATH/aria2.conf -D
+	$ARIA2_BIN --conf-path=$ARIA2_ROOT_PATH/aria2.conf -D
 	[ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
