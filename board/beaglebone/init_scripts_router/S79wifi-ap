@@ -1,10 +1,8 @@
 #! /bin/sh
 
 INTERFACE=wlan0
-INTERFACE_5G=wlan1
 WLAN_MODULE_NAME=8821au
 GATEWAY_IP=192.168.6.1
-GATEWAY_IP_5G=192.168.5.1
 
 wait_iface() {
 if [ "$1" -a ! -e "/sys/class/net/$2" ]; then
@@ -35,11 +33,6 @@ start()
     if [ $? = 0 ]; then
     ifconfig $INTERFACE $GATEWAY_IP
         hostapd -s -B /etc/hostapd.conf
-    fi
-    wait_iface 3 $INTERFACE_5G
-	if [ $? = 0 ]; then
-        ifconfig $INTERFACE_5G $GATEWAY_IP_5G
-        hostapd -s -B /etc/hostapd-5g.conf
     fi
 }
 
