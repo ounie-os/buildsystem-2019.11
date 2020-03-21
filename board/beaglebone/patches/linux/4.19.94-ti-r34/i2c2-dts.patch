@@ -1,0 +1,32 @@
+--- linux-4.19.94-ti-r34-orig/arch/arm/boot/dts/am335x-bone-common.dtsi	2020-01-29 05:34:38.000000000 +0800
++++ linux-4.19.94-ti-r34/arch/arm/boot/dts/am335x-bone-common.dtsi	2020-03-21 08:43:03.112278951 +0800
+@@ -79,12 +79,12 @@
+ 		>;
+ 	};
+ 
+-//	i2c2_pins: pinmux_i2c2_pins {
+-//		pinctrl-single,pins = <
+-//			AM33XX_PADCONF(AM335X_PIN_UART1_CTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
+-//			AM33XX_PADCONF(AM335X_PIN_UART1_RTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
+-//		>;
+-//	};
++	i2c2_pins: pinmux_i2c2_pins {
++		pinctrl-single,pins = <
++			AM33XX_PADCONF(AM335X_PIN_UART1_CTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
++			AM33XX_PADCONF(AM335X_PIN_UART1_RTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
++		>;
++	};
+ 
+ 	uart0_pins: pinmux_uart0_pins {
+ 		pinctrl-single,pins = <
+@@ -283,8 +283,8 @@
+ 
+ &i2c2 {
+ 	pinctrl-names = "default";
+-	//pinctrl-0 = <&i2c2_pins>;
+-	pinctrl-0 = <>;
++	pinctrl-0 = <&i2c2_pins>;
++	//pinctrl-0 = <>;
+ 
+ 	status = "okay";
+ 	clock-frequency = <100000>;
