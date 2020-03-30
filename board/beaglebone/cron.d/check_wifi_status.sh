@@ -24,6 +24,10 @@ if [ $? != 0 ]; then
     fi
     sleep 1
   done
-  kill -10 $(pidof udhcpc)
+  if [ $(pidof udhcpc) ]; then
+    kill -10 $(pidof udhcpc)
+  else
+    udhcpc -b -R -S -i $INTERFACE
+  fi
 fi
 
