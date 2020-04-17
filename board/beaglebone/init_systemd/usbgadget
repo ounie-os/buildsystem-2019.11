@@ -1,0 +1,55 @@
+#! /bin/sh
+
+FILE_STORAGE=/mnt/usb.img
+
+#mount -t configfs none /sys/kernel/config
+modprobe libcomposite
+# usb gadget Ethernet/RNDIS
+mkdir -p /sys/kernel/config/usb_gadget/g1
+cd /sys/kernel/config/usb_gadget/g1
+echo 0x1d6b > idVendor
+echo 0x0104 > idProduct
+
+mkdir -p functions/rndis.usb0
+echo 'ef' > functions/rndis.usb0/class
+echo '04' > functions/rndis.usb0/subclass
+echo '01' > functions/rndis.usb0/protocol
+# echo $ADDR > functions/rndis.usb0/dev_addr
+# echo $HOST > functions/rndis.usb0/host_addr
+# echo '5' > functions/rndis.usb0/qmult
+
+# echo "RNDIS" > functions/rndis.usb0/os_desc/interface.rndis/compatible_id
+# echo "5162001" > functions/rndis.usb0/os_desc/interface.rndis/sub_compatible_id
+# mkdir -p functions/rndis.usb0/os_desc/interface.rndis/Icons
+# mkdir -p functions/rndis.usb0/os_desc/interface.rndis/Label
+# echo '%SystemRoot%\system32\shell32.dll,-233' > functions/rndis.usb0/os_desc/interface.rndis/Icons/data
+# echo '2' > functions/rndis.usb0/os_desc/interface.rndis/Icons/type
+# echo 'BeagleBone USB Ethernet' > functions/rndis.usb0/os_desc/interface.rndis/Label/data
+# echo '1' > functions/rndis.usb0/os_desc/interface.rndis/Label/type
+# 
+# echo 'MSFT100' > os_desc/qw_sign
+# 
+# mkdir -p configs/c.1/strings/0x409
+# echo 'Multifunction with RNDIS' > configs/c.1/strings/0x409/configuration
+# echo "0x80" > configs/c.1/bmAttributes
+# echo 500 > configs/c.1/MaxPower
+
+mkdir -p configs/c.1
+ln -s functions/rndis.usb0 configs/c.1/
+
+# usb Mass Storage
+if [ -f ${FILE_STORAGE} ]; then
+mkdir -p functions/mass_storage.usb0
+echo 1 > functions/mass_storage.usb0/lun.0/ro
+echo 0 > functions/mass_storage.usb0/lun.0/cdrom
+echo ${FILE_STORAGE} > functions/mass_storage.usb0/lun.0/file
+echo 1 > functions/mass_storage.usb0/lun.0/nofua
+echo 1 > functions/mass_storage.usb0/lun.0/removable
+echo 0 > functions/mass_storage.usb0/stall
+ln -s functions/mass_storage.usb0 configs/c.1/
+fi
+
+# start usb gadget
+ls /sys/class/udc > UDC
+
+ifconfig usb0 192.168.7.2
