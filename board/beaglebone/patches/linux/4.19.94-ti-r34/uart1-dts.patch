@@ -1,0 +1,22 @@
+--- linux-4.19.94-ti-r34-orig/arch/arm/boot/dts/am335x-boneblack-common.dtsi	2020-01-29 05:34:38.000000000 +0800
++++ linux-4.19.94-ti-r34/arch/arm/boot/dts/am335x-boneblack-common.dtsi	2020-05-06 13:55:51.647869947 +0800
+@@ -58,6 +58,19 @@
+ 			AM33XX_PADCONF(AM335X_PIN_GPMC_A11, PIN_OUTPUT_PULLDOWN, MUX_MODE7) /* gpmc_a11.GPIO1_27 */
+ 		>;
+ 	};
++
++	uart1_pins: pinmux_uart1_pins {
++		pinctrl-single,pins = <
++			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT_PULLUP, MUX_MODE0)
++			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT_PULLDOWN, MUX_MODE0)
++		>;
++	};
++};
++
++&uart1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart1_pins>;
++	status = "okay";
+ };
+ 
+ &lcdc {
