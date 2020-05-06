@@ -1,0 +1,37 @@
+#! /bin/sh
+
+INTERFACE="eth0"
+TIME_OUT=3
+
+wait_iface() {
+if [ "$1" -a ! -e "/sys/class/net/$2" ]; then
+    time_left=$1
+    printf "Waiting for interface %s to appear" "$2"
+    while [ $time_left -gt 0 ]; do
+        if [ -e "/sys/class/net/$2" ]; then
+            printf "\n"
+            return $?
+        fi
+        sleep 1
+        printf "."
+        : $((time_left -= 1))
+    done
+    printf " timeout!\n"
+fi
+}
+
+
+case "$1" in
+	start)
+		for i in $INTERFACE;
+        do
+            wait_iface $TIME_OUT $i;
+        done
+		ifconfig eth0 192.168.1.250	
+        ;;
+	stop)
+		;;
+	*)
+		exit 1
+		;;
+esac
