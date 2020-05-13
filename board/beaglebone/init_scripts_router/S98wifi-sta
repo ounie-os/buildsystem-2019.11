@@ -1,8 +1,7 @@
 #! /bin/sh
 
-INTERFACE=wlan1
+INTERFACE=wlan0
 WLAN_MODULE_NAME=8821au
-GATEWAY_IP=192.168.6.1
 
 wait_iface() {
 if [ "$1" -a ! -e "/sys/class/net/$2" ]; then
@@ -11,35 +10,30 @@ if [ "$1" -a ! -e "/sys/class/net/$2" ]; then
     while [ $time_left -gt 0 ]; do
         if [ -e "/sys/class/net/$2" ]; then
             printf "\n"
-            return 0
+            return $?
         fi
         sleep 1
         printf "."
         : $((time_left -= 1))
     done
     printf " timeout!\n"
-    return 1
 fi
-return 0
 }
 
 start()
 {
     lsmod | grep $WLAN_MODULE_NAME
-    if [ $? != 0 ]; then
-        modprobe $WLAN_MODULE_NAME
-    fi
-    wait_iface 3 $INTERFACE
-    if [ $? = 0 ]; then
-    ifconfig $INTERFACE $GATEWAY_IP
-        hostapd -s -B /etc/hostapd.conf
-    fi
+	[ $? = 0 ] || modprobe $WLAN_MODULE_NAME && wait_iface 3 $INTERFACE
+    wpa_supplicant -s -B -Dnl80211 -i$INTERFACE -c/etc/wpa_supplicant.conf
+    udhcpc -b -R -S -i $INTERFACE
 }
 
 stop()
 {
-	kill -15 `pidof hostapd`
-    rmmod $WLAN_MODULE_NAME
+    ifconfig $INTERFACE down
+	rmmod $WLAN_MODULE_NAME
+    kill -15 `pidof wpa_supplicant`
+    kill -15 `pidof udhcpc`
 }
 
 restart()
@@ -51,11 +45,11 @@ restart()
 
 case "$1" in
 	start)
-          start
+		start
 		;;
 	stop)
-          stop
-		;;
+		stop
+        ;;
     restart)
         	restart
         ;;

@@ -6,7 +6,7 @@ case "$1" in
 	start)
         echo 1 > /proc/sys/net/ipv4/ip_forward
         iptables -F
-        [ -e "/sys/class/net/wlan0" ] && iptables -t nat -A POSTROUTING -s ${NAT_IP}/24 -o eth0 -j MASQUERADE
+        [ -e "/sys/class/net/wlan0" ] && iptables -t nat -A POSTROUTING -s ${NAT_IP}/24 -o wlan0 -j MASQUERADE
 		;;
 	stop)
 		;;
