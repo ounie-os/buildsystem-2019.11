@@ -17,6 +17,7 @@ cp -ar ${BOARD_DIR}/dnsmasq.conf ${TARGET_DIR}/etc/
 cp -ar ${BOARD_DIR}/hostapd.conf ${TARGET_DIR}/etc/
 cp -ar ${BOARD_DIR}/hostapd-5g.conf ${TARGET_DIR}/etc/
 cp -ar ${BOARD_DIR}/udhcpd.conf ${TARGET_DIR}/etc/
+cp -ar ${BOARD_DIR}/sysctl.conf ${TARGET_DIR}/etc/
 cp -ar ${BOA_ARIA2}/ ${TARGET_DIR}/etc
 sed -i "5s/'# '/'\\\u@\\\h:\\\w\\\\$ '/g" ${TARGET_DIR}/etc/profile
 sed -i "7s/'$ '/'\\\u@\\\h:\\\w\\\\$ '/g" ${TARGET_DIR}/etc/profile
