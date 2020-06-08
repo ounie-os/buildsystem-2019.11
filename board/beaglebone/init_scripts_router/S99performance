@@ -1,0 +1,12 @@
+#! /bin/sh
+
+case "$1" in
+	start)
+		echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+                ;;
+	stop)
+		;;
+	*)
+		exit 1
+		;;
+esac
