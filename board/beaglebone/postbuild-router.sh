@@ -8,6 +8,7 @@ WIFI_FIRMWARE="${BOARD_DIR}/rtlwifi"
 INIT_SCRIPT="${BOARD_DIR}/init_scripts"
 INIT_SCRIPT_ROUTER="${BOARD_DIR}/init_scripts_router"
 BOA_ARIA2="${BOARD_DIR}/boa-AriaNg"
+CROND="${BOARD_DIR}/cron.d"
 
 mkdir -p ${TARGET_DIR}/lib/firmware
 cp -ar ${WIFI_FIRMWARE} ${TARGET_DIR}/lib/firmware
@@ -19,6 +20,7 @@ cp -ar ${BOARD_DIR}/hostapd-5g.conf ${TARGET_DIR}/etc/
 cp -ar ${BOARD_DIR}/udhcpd.conf ${TARGET_DIR}/etc/
 cp -ar ${BOARD_DIR}/sysctl.conf ${TARGET_DIR}/etc/
 cp -ar ${BOA_ARIA2}/ ${TARGET_DIR}/etc
+cp -ar ${CROND}/cron_change_governor ${TARGET_DIR}/etc
 sed -i "5s/'# '/'\\\u@\\\h:\\\w\\\\$ '/g" ${TARGET_DIR}/etc/profile
 sed -i "7s/'$ '/'\\\u@\\\h:\\\w\\\\$ '/g" ${TARGET_DIR}/etc/profile
 

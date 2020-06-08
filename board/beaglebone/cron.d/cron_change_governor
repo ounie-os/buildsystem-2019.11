@@ -1,0 +1,2 @@
+* 1 * * * echo ondemand > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+* 5 * * * echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
