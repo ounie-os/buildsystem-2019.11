@@ -1,0 +1,15 @@
+[Unit]
+Description=Eth0 static ip
+#Requires=sys-subsystem-net-devices-%i.device
+#After=sys-subsystem-net-devices-%i.device
+Before=network.target
+Wants=network.target
+
+# NetworkManager users will probably want the dbus version instead.
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c 'ifconfig eth0 192.168.1.250'
+
+[Install]
+WantedBy=multi-user.target

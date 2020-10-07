@@ -1,0 +1,19 @@
+#! /bin/sh
+
+NAT_IP=192.168.6.0
+echo 1 > /proc/sys/net/ipv4/ip_forward
+modprobe nf_log_ipv4
+iptables -F
+iptables -t nat -F
+if [ -e "/sys/class/net/wlan0" ]; then
+	iptables -A INPUT -i wlan1 -d 192.168.6.1 -j ACCEPT
+	iptables -A INPUT -s 192.168.8.1 -j ACCEPT
+	iptables -A INPUT -s 192.168.8.0/24 -j DROP
+	iptables -A FORWARD -m mac --mac-source 6c:8d:c1:60:60:47 -m limit --limit 300/s -j ACCEPT
+	iptables -A FORWARD -m mac --mac-source 6c:8d:c1:60:60:47 -j DROP
+	iptables -t nat -A POSTROUTING -s ${NAT_IP}/24 -o wlan0 -j MASQUERADE
+fi
+
+#iptables -A FORWARD -i wlan1 -o wlan0 -s ${NAT_IP}/24 -m state --state NEW -j ACCEPT
+#iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+#iptables -t nat -A POSTROUTING -s ${NAT_IP}/24 -o wlan0 -j MASQUERADE	

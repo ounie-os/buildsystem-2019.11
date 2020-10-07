@@ -1,0 +1,19 @@
+[Unit]
+Description=Wifi sta and ap mode
+#Requires=sys-subsystem-net-devices-%i.device
+#After=sys-subsystem-net-devices-%i.device
+Before=network.target
+Wants=network.target
+
+# NetworkManager users will probably want the dbus version instead.
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c "sleep 4"
+ExecStartPre=/bin/sh -c 'ifconfig wlan1 192.168.6.1'
+ExecStartPre=/usr/sbin/hostapd -s -B /etc/hostapd.conf
+ExecStartPre=/sbin/udhcpc -b -R -S -i wlan0
+ExecStart=/usr/sbin/wpa_supplicant -c/etc/wpa_supplicant.conf -Dnl80211 -iwlan0
+
+[Install]
+WantedBy=multi-user.target
