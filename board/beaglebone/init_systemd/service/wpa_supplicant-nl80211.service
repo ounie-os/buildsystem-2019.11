@@ -1,0 +1,17 @@
+[Unit]
+Description=WPA supplicant daemon (interface- and nl80211 driver-specific version)
+#Requires=sys-subsystem-net-devices-%i.device
+#After=sys-subsystem-net-devices-%i.device
+Before=network.target
+Wants=network.target
+
+# NetworkManager users will probably want the dbus version instead.
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c 'sleep 3'
+ExecStartPre=/sbin/udhcpc -b -R -S -x hostname:bbb-iot -i wlan0
+ExecStart=/usr/sbin/wpa_supplicant -c/etc/wpa_supplicant/wpa_supplicant-nl80211-wlan0.conf -Dnl80211 -iwlan0
+
+[Install]
+WantedBy=multi-user.target

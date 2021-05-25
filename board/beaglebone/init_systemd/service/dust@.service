@@ -1,0 +1,11 @@
+[Unit]
+Description=dust monitor device %i
+After=network.target dbus-session.service
+
+[Service]
+ExecStart=python3 /mnt/dust-monitor/dust.py %i
+EnvironmentFile=/tmp/dbus_session_bus_address
+
+# 当前Unit激活时（enable）符号链接会放入/etc/systemd/system目录下面以 Target 名 + .wants后缀构成的子目录中
+[Install]
+WantedBy=multi-user.target

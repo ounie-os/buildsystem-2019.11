@@ -53,3 +53,4 @@ fi
 ls /sys/class/udc > UDC
 
 ifconfig usb0 192.168.7.2
+ifconfig eth0 192.168.1.250
